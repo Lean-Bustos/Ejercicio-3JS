@@ -53,6 +53,19 @@ const form = document.getElementById('form');
 const input = document.getElementById('input');
 const comanda = document.getElementById('section-pedido')
 
+const objetoPizza = JSON.parse(localStorage.getItem("Producto"));
+
+if (objetoPizza){ 
+    const renderProducto =  
+                `<div class="card-container">
+                <h2 class="titulo-card">${objetoPizza.nombre}</h2>
+                <img class="img-card" src="${objetoPizza.img}" alt"img" >
+                <h3 class="precio-card">$${objetoPizza.precio}</h3>
+                <p class="p-card"> ${objetoPizza.ingredientes} </p>
+                </div>`
+
+    comanda.innerHTML = renderProducto;
+}
 
 form.addEventListener('submit', (e) =>{
     e.preventDefault();
@@ -70,6 +83,7 @@ form.addEventListener('submit', (e) =>{
         </h2>
         </div>`
         comanda.innerHTML = ingresarAlgo
+        localStorage.clear();
 
     } else if(!encargo[0]){
         const ingresoInvalido =
@@ -79,7 +93,8 @@ form.addEventListener('submit', (e) =>{
         Ese Producto No esta en nuestra Lista
          </h2>
          </div>`
-        comanda.innerHTML = ingresoInvalido  
+        comanda.innerHTML = ingresoInvalido
+        localStorage.clear();
 
     } else{        
             const renderPizzaYPrecio =  
@@ -92,12 +107,12 @@ form.addEventListener('submit', (e) =>{
         comanda.innerHTML = renderPizzaYPrecio;
         }
 
-        form.reset()
-        localStorage.setItem("producto", comanda.pizza);
-        localStorage();
+        form.reset();
+
+        localStorage.setItem("Producto", JSON.stringify(encargo[0]));
 })
 
-// 👉 A cada Pizza, agregarle una imagen. 
+
 // 👉 Crear un archivo HTML que contenga un contenedor en el cual se renderice una card en la que deberán renderizar el nombre, imagen, ingredientes y precio de una pizza (Estilizarlo con CSS 🎨). Además, deberán renderizar el mismo input de tipo number y botón de la entrega anterior.
 
 // Deberemos colocar un numero en el input y, al apretar el botón, deberá renderizar en el contenedor una card con los datos de la pizza cuyo id coincida con el número ingresado en el input.
